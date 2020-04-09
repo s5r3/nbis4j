@@ -1,0 +1,43 @@
+plugins {
+    id "java"
+    id "net.freudasoft.gradle-cmake-plugin" version "0.0.4"
+}
+
+group "io.github"
+version "0.1"
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("net.java.dev.jna:jna-platform:5.5.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.0")
+    testImplementation("org.slf4j:slf4j-simple:1.7.30")
+}
+
+jar {
+    manifest {
+        attributes "Implementation-Title": "NBIS4j"
+        attributes "Implementation-Version": "$project.version"
+    }
+}
+
+cmake {
+    sourceFolder = file("$projectDir/src/main/cpp")
+    generator = "Unix Makefiles"
+    installPrefix = "$projectDir/src/main/resources"
+    buildTarget = "install"
+    buildClean = true
+}
+
+test {
+    useJUnitPlatform()
+    testLogging.showStandardStreams = true
+    testLogging.showExceptions = true
+    testLogging.showStackTraces = true
+    systemProperty "dataDir", System.getProperty("dataDir")
+}

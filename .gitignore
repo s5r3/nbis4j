@@ -1,0 +1,9 @@
+gradle
+build
+native
+out
+.gradle
+.idea
+*.kdev4
+*.so
+*.o
