@@ -1,37 +1,42 @@
-## Welcome to GitHub Pages
+# NBIS4j
 
-You can use the [editor on GitHub](https://github.com/s5r3/nbis4j/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+NBIS4j is Java library targeted to wrap functionalities implemented in the NIST Biometric Image Software (NBIS) distribution which is developed by the National Institute of Standards and Technology (NIST) for the Federal Bureau of Investigation (FBI) and Department of Homeland Security (DHS). Please see https://www.nist.gov/services-resources/software/nist-biometric-image-software-nbis for details.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Build
 
-### Markdown
+### Prerequisite
+- NBIS installed, installation directory path must be exported as `NBIS_ROOT` in OS environment variables.
+- GCC >= 4.8
+- CMake >= 3.10
+- Java >= 1.8
+- Gradle >= 6.0
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+### How to build
+```
+$ gradle clean cmakeBuild build
+$ gradle test -DdataDir=/path/to/fingerprints
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Usage
+### NFIQ
+```java
+import io.github.nbis4j.ImageFormat;
+import io.github.nbis4j.NFIQ;
 
-### Jekyll Themes
+int nfiqOfWSQ(byte[] data) {
+    return NFIQ.compute(byte[] data, ImageFormat.WSQ);
+}
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/s5r3/nbis4j/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+int nfiqOfBMP(byte[] data) {
+    return NFIQ.compute(byte[] data, ImageFormat.BMP);
+}
+```
 
-### Support or Contact
+## To do
+- WSQ
+- AN2K
+- JP2
+- NFSEG
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+## License
+This project is licensed under the terms of the MIT license.
