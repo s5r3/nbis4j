@@ -39,5 +39,7 @@ test {
     testLogging.showStandardStreams = true
     testLogging.showExceptions = true
     testLogging.showStackTraces = true
-    systemProperty "dataDir", System.getProperty("dataDir")
+    systemProperty "nfiqDir", System.getProperty("nfiqDir")
+    systemProperty "bmpDir", System.getProperty("bmpDir")
+    systemProperty "wsqDir", System.getProperty("wsqDir")
 }

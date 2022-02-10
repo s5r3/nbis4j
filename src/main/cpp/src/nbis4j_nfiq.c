@@ -20,18 +20,13 @@ int compute_nfiq_from_bitmap(byte *bitmap, int width, int height, int *nfiq) {
 
 int compute_nfiq_from_wsq(byte *wsq, int len, int *nfiq) {
     byte *bitmap;
-    int width, height, depth, ppi, lossyflag;
-    int ret = wsq_decode_mem(&bitmap, &width, &height, &depth, &ppi, &lossyflag, wsq, len);
+    int width, height, depth, ppi, lossy;
+    int ret = wsq_decode_mem(&bitmap, &width, &height, &depth, &ppi, &lossy, wsq, len);
     if (ret != 0) {
         if (bitmap != NULL) {
             free(bitmap);
         }
         return 9900 + ret;
-    }
-    
-    if (depth != 8) {
-        free(bitmap);
-        return 9900;
     }
     
     int onfiq;

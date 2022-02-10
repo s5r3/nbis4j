@@ -1,11 +1,17 @@
 package io.github.nbis4j.test;
 
+import io.github.nbis4j.Bitmap;
 import io.github.nbis4j.ImageFormat;
 import io.github.nbis4j.NFIQ;
+import io.github.nbis4j.WSQCodec;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,8 +20,8 @@ import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class NFIQ4jTest {
-    private static final Logger log = LoggerFactory.getLogger(NFIQ4jTest.class);
+public class NFIQTest {
+    private static final Logger log = LoggerFactory.getLogger(NFIQTest.class);
 
     @BeforeAll
     private void init() {
@@ -25,13 +31,13 @@ public class NFIQ4jTest {
     @Test
     @Order(1)
     public void computeNFIQ() throws IOException {
-        String dataDirPath = System.getProperty("dataDir");
-        if (dataDirPath == null || dataDirPath.trim().length() == 0) {
-            log.info("Skipping, data source not provided by -DdataDir=</path/to/fingerprint/directory>");
+        String nfiqDirPath = System.getProperty("nfiqDir");
+        if (nfiqDirPath == null || nfiqDirPath.trim().length() == 0) {
+            log.info("Skipping, data source not provided by -DnfiqDir=</path/to/fingerprint/directory>");
             return;
         }
-        log.info("Reading fingerprints from {}", dataDirPath);
-        List<String> filePaths = listFilePaths(dataDirPath);
+        log.info("Reading fingerprints from {}", nfiqDirPath);
+        List<String> filePaths = listFilePaths(nfiqDirPath);
         log.info("Found fingerprints to compute NFIQ {}", filePaths.size());
         int count = 0;
         long t0 = System.currentTimeMillis();

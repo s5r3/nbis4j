@@ -32,8 +32,21 @@ int nfiqOfBMP(byte[] data) {
 }
 ```
 
+### WSQCodec
+```java
+import io.github.nbis4j.Bitmap;
+import io.github.nbis4j.WSQCodec;
+
+byte[] encodeBitmap(byte[] pixels, int width, int height) {
+    return WSQCodec.encode(new Bitmap(pixels, width, height));
+}
+
+Bitmap decodeWSQ(byte[] wsq) {
+    return WSQCodec.decode(wsq);
+}
+```
+
 ## To do
-- WSQ
 - AN2K
 - JP2
 - NFSEG
