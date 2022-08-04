@@ -28,6 +28,19 @@ public class NFIQ {
         }
     }
 
+    public static int compute(byte[] pixels, int width, int height) {
+        if (!initialized) {
+            initialize();
+        }
+
+        IntByReference nfiq = new IntByReference();
+        int status = CLibrary.INSTANCE.compute_nfiq_from_bitmap(pixels, width, height, nfiq);
+        if (status != 0) {
+            throw new NBISException("Error in native layer", status);
+        }
+        return nfiq.getValue();
+    }
+
     public static int compute(byte[] bytes, ImageFormat format) {
         if (!initialized) {
             initialize();
